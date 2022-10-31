@@ -155,7 +155,7 @@ void CDiscreteRandomVariable::CalculateMode()
 	for (int i = 0; i < MAX_SIZE; i++) {
 		if (m_FrequencyVector[i] > highest_frequency) {
 			highest_frequency = m_FrequencyVector[i];
-			m_Mode = i;
+			m_Mode = i+1;
 		}
 	}
 }

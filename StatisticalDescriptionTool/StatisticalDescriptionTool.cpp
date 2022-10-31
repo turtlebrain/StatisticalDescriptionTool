@@ -170,17 +170,28 @@ int main()
 
     // Draw Simulation
     RandomDrawingMachine DrawMachine;
-    int num_trials(20);
-    vector<vector<int>> RandomDraws(num_trials);
-    cout << num_trials << " Draws:" << endl;
-    for (int i = 0; i < num_trials; i++) {
-        vector<int> RandomDraw = DrawMachine.DrawEightNumbers(RandomVariableWinningNumbers);
-        RandomDraws[i] = RandomDraw;
-        PrintVector(RandomDraw);
-    }
+    int drw_sample_size(500);
+    cout << "Mean of Sample of " << drw_sample_size << " Draws" << endl;
+    for (int trials = 1; trials <= drw_sample_size; trials++) {
+        vector<vector<int>> RandomDraws(NUMBER_OF_DRAWS);
+        for (int i = 0; i < drw_sample_size; i++) {
+            vector<int> RandomDraw = DrawMachine.DrawEightNumbers(RandomVariableWinningNumbers);
+            for (int j = 0; j < NUMBER_OF_DRAWS; j++) {
+                RandomDraws[j].push_back(RandomDraw[j]);
+            }
+        }
 
-    // Average Draws
-    vector<int> meanDraw, SampleDraw;
+        // Average Draws
+        vector<int> modeDraw(NUMBER_OF_DRAWS);
+        vector<CDiscreteRandomVariable*> SampleDraws(NUMBER_OF_DRAWS);
+        for (int i = 0; i < NUMBER_OF_DRAWS; i++) {
+            SampleDraws[i] = new CDiscreteRandomVariable(RandomDraws[i]);
+            modeDraw[i] = SampleDraws[i]->GetMode();
+            delete SampleDraws[i];
+        }
+
+        PrintVector(modeDraw);
+    }
 
 
     // Garbage Collection
