@@ -25,6 +25,20 @@ void PrintVector(vector<double> vec) {
     cout << endl;
 }
 
+void PrintHypothesisTestingResults(vector<CGoodnessOfFitTest*> &NormalDistributionHypothesisTests, vector<CGoodnessOfFitTest*> &GammaDistributionHypothesisTests) {
+    if (NormalDistributionHypothesisTests.size() == GammaDistributionHypothesisTests.size()) {
+        for (int j = 0; j < NormalDistributionHypothesisTests.size(); j++) {
+            cout << "Distribution of Draw #" << j << " is: ";
+            if (NormalDistributionHypothesisTests[j]->GetH0()) cout << "NORMAL";
+            else if (GammaDistributionHypothesisTests[j]->GetH0()) cout << "GAMMA";
+            else cout << "NEITHER NORMAL NOR GAMMA";
+            if (NormalDistributionHypothesisTests[j]->GetH0() && GammaDistributionHypothesisTests[j]->GetH0())
+                cout << " AND GAMMA";
+            cout << endl;
+        }
+    }
+}
+
 
 vector<int> GetVectorOfSuccessiveCounts(vector<vector<int>> sample) {
     vector<int> successiveCount(MAX_SIZE-1);
@@ -79,6 +93,7 @@ int main()
     StringReference* errorMessage = new StringReference();
     vector<RGBABitmapImageReference*> PDFplots(NUMBER_OF_DRAWS);
     vector<RGBABitmapImageReference*> CDFplots(NUMBER_OF_DRAWS);
+#pragma omp parallel for
     for (int j = 0; j < NUMBER_OF_DRAWS; j++) {
         PDFplots[j] = CreateRGBABitmapImageReference();
         CDFplots[j] = CreateRGBABitmapImageReference();
@@ -145,6 +160,7 @@ int main()
     vector<CGoodnessOfFitTest*> GammaDistributionHypothesisTests(NUMBER_OF_DRAWS);
     double WinningNumbersSampleSize(0.);
 
+#pragma omp parallel for
     for (int j = 0; j < NUMBER_OF_DRAWS; j++) {
         NormallyDistributedWinningNumbers[j] = new CNormalDistribution(d_max_numbers, RandomVariableWinningNumbers[j]->GetMean(), RandomVariableWinningNumbers[j]->GetStdVariation());
         GammaDistributedWinningNumbers[j] = new CGammaDistribution(d_max_numbers, RandomVariableWinningNumbers[j]->GetMean(), RandomVariableWinningNumbers[j]->GetStdVariation());
@@ -153,15 +169,8 @@ int main()
         GammaDistributedWinningNumbers[j]->GenerateDistribution(WinningNumbersSampleSize);
         NormalDistributionHypothesisTests[j] = new CGoodnessOfFitTest(RandomVariableWinningNumbers[j], NormallyDistributedWinningNumbers[j]);
         GammaDistributionHypothesisTests[j] = new CGoodnessOfFitTest(RandomVariableWinningNumbers[j], GammaDistributedWinningNumbers[j]);
-
-        cout << "Distribution of Draw #" << j << " is: ";
-        if (NormalDistributionHypothesisTests[j]->GetH0()) cout << "NORMAL";
-        else if (GammaDistributionHypothesisTests[j]->GetH0()) cout << "GAMMA";
-        else cout << "NEITHER NORMAL NOR GAMMA";
-        if (NormalDistributionHypothesisTests[j]->GetH0() && GammaDistributionHypothesisTests[j]->GetH0())
-            cout << " AND GAMMA";
-        cout << endl;
     }
+    PrintHypothesisTestingResults(NormalDistributionHypothesisTests, GammaDistributionHypothesisTests);
 
     vector<int> successiveTest;
     successiveTest = GetVectorOfSuccessiveCounts(SampleWinningNumbers);
@@ -170,27 +179,36 @@ int main()
 
     // Draw Simulation
     RandomDrawingMachine DrawMachine;
-    int drw_sample_size(500);
-    cout << "Mean of Sample of " << drw_sample_size << " Draws" << endl;
-    for (int trials = 1; trials <= drw_sample_size; trials++) {
+    int drw_sample_size(10);
+    int num_trials(50);
+
+    for (int trials = 1; trials <= num_trials; trials++) {
         vector<vector<int>> RandomDraws(NUMBER_OF_DRAWS);
+
+
+        cout << endl;
+        cout << "Trial# " << trials << endl;
+   
         for (int i = 0; i < drw_sample_size; i++) {
             vector<int> RandomDraw = DrawMachine.DrawEightNumbers(RandomVariableWinningNumbers);
             for (int j = 0; j < NUMBER_OF_DRAWS; j++) {
                 RandomDraws[j].push_back(RandomDraw[j]);
             }
+            PrintVector(RandomDraw);
         }
 
         // Average Draws
-        vector<int> modeDraw(NUMBER_OF_DRAWS);
+        vector<int> meanDraw(NUMBER_OF_DRAWS);
         vector<CDiscreteRandomVariable*> SampleDraws(NUMBER_OF_DRAWS);
         for (int i = 0; i < NUMBER_OF_DRAWS; i++) {
             SampleDraws[i] = new CDiscreteRandomVariable(RandomDraws[i]);
-            modeDraw[i] = SampleDraws[i]->GetMode();
+            meanDraw[i] = (int)SampleDraws[i]->GetMean();
             delete SampleDraws[i];
         }
 
-        PrintVector(modeDraw);
+        cout << "Mean Draw:" << endl;
+        PrintVector(meanDraw);
+
     }
 
 
