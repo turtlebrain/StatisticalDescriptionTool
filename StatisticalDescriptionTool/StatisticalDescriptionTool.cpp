@@ -214,6 +214,7 @@ int main()
 
 
     // Garbage Collection
+#pragma omp parallel for
     for (int i = 0; i < NUMBER_OF_DRAWS; i++) {
         delete RandomVariableWinningNumbers[i];
         delete NormallyDistributedWinningNumbers[i];
