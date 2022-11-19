@@ -200,9 +200,10 @@ int main()
         // Average Draws
         vector<int> meanDraw(NUMBER_OF_DRAWS);
         vector<CDiscreteRandomVariable*> SampleDraws(NUMBER_OF_DRAWS);
+#pragma omp parallel for
         for (int i = 0; i < NUMBER_OF_DRAWS; i++) {
             SampleDraws[i] = new CDiscreteRandomVariable(RandomDraws[i]);
-            meanDraw[i] = (int)SampleDraws[i]->GetMean();
+            meanDraw[i] = (int)(ceil(SampleDraws[i]->GetMean()));
             delete SampleDraws[i];
         }
 
