@@ -87,21 +87,21 @@ void CDiscreteRandomVariable::GenerateCumulativeProbabilityVector()
 	assert(m_CumulativeProbabilityVector.back() <= 1. + TOL);
 }
 
-inline double CDiscreteRandomVariable::GetProbabilityValueIsEqualTo(int value)
+inline double CDiscreteRandomVariable::GetProbabilityValueIsEqualTo(int value) const
 {
 	assert(value >= 1);
 	int zero_index = value - 1;
 	return m_ProbabilityVector[zero_index];
 }
 
-inline double CDiscreteRandomVariable::GetProbabilityValueIsLessThan(int value)
+inline double CDiscreteRandomVariable::GetProbabilityValueIsLessThan(int value) const
 {
 	assert(value >= 1);
 	int zero_index = value - 1;
 	return m_CumulativeProbabilityVector[zero_index];
 }
 
-inline double CDiscreteRandomVariable::GetProbabilityValueIsGreaterThan(int value)
+inline double CDiscreteRandomVariable::GetProbabilityValueIsGreaterThan(int value) const
 {
 	assert(value >= 1);
 	int zero_index = value - 1;
@@ -124,9 +124,9 @@ void CDiscreteRandomVariable::CalculateVariance()
 	double variance(0.);
 	double mean = GetMean();
 	if (mean == DBL_MAX) CalculateMean();
-	double meanSquare = pow(mean, 2.);
+	double meanSquare = mean * mean;
 	for (int i = 0; i < MAX_SIZE; i++) {
-		variance += (pow(max_numbers[i], 2.)) * m_ProbabilityVector[i];
+		variance += ((double)max_numbers[i] * (double)max_numbers[i]) * m_ProbabilityVector[i];
 	}
 	variance -= meanSquare;
 

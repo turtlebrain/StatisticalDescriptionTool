@@ -11,10 +11,10 @@ public:
 public:
 	void CalculateChiSquaredStatistic(CDiscreteRandomVariable* ObservedDist, CContinuousDistribution* AssumedDist);
 	void InitializeChiSquaredCriticalTable();
-	double GetChiSquaredCritical(double alpha, int dof);
-	int GetIndexFromAlpha(double alpha);
-	bool GetH0() { return m_H0; }
-	bool GetH1() { return m_H1; }
+	double GetChiSquaredCritical(double alpha, int dof) const;
+	int GetIndexFromAlpha(double alpha) const;
+	bool GetH0() const { return m_H0; }
+	bool GetH1() const { return m_H1; }
 
 protected:
 	bool m_H0;									//Null Hypothesis - Assumed Distribution is correct

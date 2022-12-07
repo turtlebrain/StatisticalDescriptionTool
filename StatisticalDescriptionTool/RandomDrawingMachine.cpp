@@ -40,7 +40,7 @@ int RandomDrawingMachine::DrawOneNumber(CDiscreteRandomVariable* random_variable
     return value_drawn;
 }
 
-vector<int> RandomDrawingMachine::DrawEightNumbers(vector<CDiscreteRandomVariable*> &random_vars)
+vector<int> RandomDrawingMachine::DrawEightNumbers(const vector<CDiscreteRandomVariable*> &random_vars)
 {
     vector<int> values_drawn(random_vars.size());
 

@@ -9,7 +9,7 @@ public:
 	~RandomDrawingMachine() {};
 
 public:
-	int DrawOneNumber(CDiscreteRandomVariable* random_var);
-	vector<int> DrawEightNumbers(vector<CDiscreteRandomVariable*>& random_vars);
+	static int DrawOneNumber(CDiscreteRandomVariable* random_var);
+	static vector<int> DrawEightNumbers(const vector<CDiscreteRandomVariable*>& random_vars);
 };
 

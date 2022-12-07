@@ -34,7 +34,7 @@ void CGoodnessOfFitTest::InitializeChiSquaredCriticalTable()
 	m_Chi2CriticalTable = Chi2CriticalTableReader.GetDoublesDataSet();
 }
 
-int CGoodnessOfFitTest::GetIndexFromAlpha(double alpha)
+int CGoodnessOfFitTest::GetIndexFromAlpha(double alpha) const
 {
 	int index = 0;
 	if (alpha == 0.995) index = 1;
@@ -51,7 +51,7 @@ int CGoodnessOfFitTest::GetIndexFromAlpha(double alpha)
 	return index;
 }
 
-double CGoodnessOfFitTest::GetChiSquaredCritical(double alpha, int dof)
+double CGoodnessOfFitTest::GetChiSquaredCritical(double alpha, int dof) const
 {
 	int Chi2CriticalTableSize = m_Chi2CriticalTable.size();
 	double target(0.);
@@ -95,8 +95,8 @@ void CGoodnessOfFitTest::CalculateChiSquaredStatistic(CDiscreteRandomVariable* O
 {
 	double ChiSquaredStat(0.);
 	for (int i = 0; i < ObservedDist->GetFrequencyVector().size(); i++) {
-		ChiSquaredStat += (pow(ObservedDist->GetFrequencyVector()[i] - AssumedDist->GetDistribution()[i], 2)) / 
-			AssumedDist->GetDistribution()[i];
+		double diff_in_dist = (ObservedDist->GetFrequencyVector()[i] - AssumedDist->GetDistribution()[i]);
+		ChiSquaredStat += (diff_in_dist * diff_in_dist) / AssumedDist->GetDistribution()[i];
 	}
 	m_chi2_stat = ChiSquaredStat;
 }

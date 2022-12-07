@@ -32,17 +32,17 @@ public:
 	void CalculateVariance();
 	void CalculateStandardDeviation();
 	void CalculateMode();
-	vector<int> GetFrequencyVector() { return m_FrequencyVector; }
-	vector<double> GetProbabilityVector() { return m_ProbabilityVector; }
-	vector<double> GetCumulativeProbabilityVector() { return m_CumulativeProbabilityVector; }
-	double GetProbabilityValueIsEqualTo(int value);
-	double GetProbabilityValueIsLessThan(int value);
-	double GetProbabilityValueIsGreaterThan(int value);
-	int GetMode() { return m_Mode; }
-	double GetMean() { return m_Mean; }
-	double GetVariance() { return m_Variance; }
-	double GetStdVariation() { return m_StdDeviation; }
-	int GetSampleSize() { return m_SampleSize; }
+	vector<int> GetFrequencyVector() const { return m_FrequencyVector; }
+	vector<double> GetProbabilityVector() const { return m_ProbabilityVector; }
+	vector<double> GetCumulativeProbabilityVector() const { return m_CumulativeProbabilityVector; }
+	double GetProbabilityValueIsEqualTo(int value) const;
+	double GetProbabilityValueIsLessThan(int value) const;
+	double GetProbabilityValueIsGreaterThan(int value) const;
+	int GetMode() const { return m_Mode; }
+	double GetMean() const { return m_Mean; }
+	double GetVariance() const { return m_Variance; }
+	double GetStdVariation() const { return m_StdDeviation; }
+	int GetSampleSize() const { return m_SampleSize; }
 
 	// Utility functions
 	void AppendRandomSample(vector<int> &RandomSampleToAppend);

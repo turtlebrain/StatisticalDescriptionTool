@@ -16,8 +16,8 @@ public:
 
 	bool ReadTableOfIntegers(string FileName);
 	bool ReadTableOfDoubles(string FileName);
-	vector<vector<int>> GetIntegersDataSet() { return m_iDataSet; }
-	vector<vector<double>> GetDoublesDataSet() { return m_dDataSet; }
+	vector<vector<int>> GetIntegersDataSet() const { return m_iDataSet; }
+	vector<vector<double>> GetDoublesDataSet() const { return m_dDataSet; }
 
 protected:
 	vector<vector<int>> m_iDataSet;

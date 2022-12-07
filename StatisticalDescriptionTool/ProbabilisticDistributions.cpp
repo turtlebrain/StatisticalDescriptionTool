@@ -4,7 +4,7 @@
 #include <assert.h>
 #include <cmath>
 
-CNormalDistribution::CNormalDistribution(vector<double>& possibleOutcomes, double mean, double stdDev)
+CNormalDistribution::CNormalDistribution(const vector<double>& possibleOutcomes, double mean, double stdDev)
 {
 	m_possibleOutcomes = possibleOutcomes;
 	m_mean = mean;
@@ -43,7 +43,7 @@ void CNormalDistribution::GenerateProbabilityDensityFunction()
 	vector<pair<double, double>> pdf(number_of_possible_outcomes);
 	for (int i = 0; i < number_of_possible_outcomes; i++) {
 		pdf[i].first = m_possibleOutcomes[i];
-		pdf[i].second = (1. / sqrt(2 * M_PI * pow(m_stdDev, 2))) * exp(-(1. / 2.) * pow((m_possibleOutcomes[i] - m_mean) / m_stdDev, 2));
+		pdf[i].second = (1. / sqrt(2 * M_PI * m_stdDev * m_stdDev)) * exp(-(1. / 2.) * ((m_possibleOutcomes[i] - m_mean) / m_stdDev) * ((m_possibleOutcomes[i] - m_mean) / m_stdDev));
 	}
 
 	m_PDF = pdf;
@@ -58,13 +58,13 @@ void CNormalDistribution::GenerateDistribution(double SampleSize)
 	}
 }
 
-CGammaDistribution::CGammaDistribution(vector<double>& possibleOutcomes, double mean, double stdDev)
+CGammaDistribution::CGammaDistribution(const vector<double>& possibleOutcomes, double mean, double stdDev)
 {
 	m_possibleOutcomes = possibleOutcomes;
 	m_mean = mean;
 	m_stdDev = stdDev;
-	m_alpha = round(pow(mean, 2) / pow(stdDev, 2));
-	m_beta = round(mean/pow(stdDev, 2));
+	m_alpha = round((mean * mean) / (stdDev * stdDev));
+	m_beta = round(mean/ (stdDev * stdDev));
 	GenerateProbabilityDensityFunction();
 }
 

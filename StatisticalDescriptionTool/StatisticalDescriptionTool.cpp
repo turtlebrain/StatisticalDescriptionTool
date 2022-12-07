@@ -11,21 +11,21 @@
 #include "GoodnessOfFitTest.h"
 #include "RandomDrawingMachine.h"
 
-void PrintVector(vector<int> vec) {
+void PrintVector(const vector<int>& vec) {
     for (int i = 0; i < vec.size(); i++) {
         cout << vec[i] << " ";
     }
     cout << endl;
 }
 
-void PrintVector(vector<double> vec) {
+void PrintVector(const vector<double>& vec) {
     for (int i = 0; i < vec.size(); i++) {
         cout << vec[i] << " ";
     }
     cout << endl;
 }
 
-void PrintHypothesisTestingResults(vector<CGoodnessOfFitTest*> &NormalDistributionHypothesisTests, vector<CGoodnessOfFitTest*> &GammaDistributionHypothesisTests) {
+void PrintHypothesisTestingResults(const vector<CGoodnessOfFitTest*> &NormalDistributionHypothesisTests, const vector<CGoodnessOfFitTest*> &GammaDistributionHypothesisTests) {
     if (NormalDistributionHypothesisTests.size() == GammaDistributionHypothesisTests.size()) {
         for (int j = 0; j < NormalDistributionHypothesisTests.size(); j++) {
             cout << "Distribution of Draw #" << j << " is: ";
@@ -40,7 +40,7 @@ void PrintHypothesisTestingResults(vector<CGoodnessOfFitTest*> &NormalDistributi
 }
 
 
-vector<int> GetVectorOfSuccessiveCounts(vector<vector<int>> sample) {
+vector<int> GetVectorOfSuccessiveCounts(const vector<vector<int>>& sample) {
     vector<int> successiveCount(MAX_SIZE-1);
     for (int i = 0; i < sample[0].size(); i++) {
         for (int j = 1; j < sample.size(); j++) {
@@ -178,8 +178,7 @@ int main()
     PrintVector(successiveTest);
 
     // Draw Simulation
-    RandomDrawingMachine DrawMachine;
-    int drw_sample_size(10);
+    int drw_sample_size(30);
     int num_trials(50);
 
     for (int trials = 1; trials <= num_trials; trials++) {
@@ -190,7 +189,7 @@ int main()
         cout << "Trial# " << trials << endl;
    
         for (int i = 0; i < drw_sample_size; i++) {
-            vector<int> RandomDraw = DrawMachine.DrawEightNumbers(RandomVariableWinningNumbers);
+            vector<int> RandomDraw = RandomDrawingMachine::DrawEightNumbers(RandomVariableWinningNumbers);
             for (int j = 0; j < NUMBER_OF_DRAWS; j++) {
                 RandomDraws[j].push_back(RandomDraw[j]);
             }
