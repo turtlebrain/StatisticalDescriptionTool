@@ -4,7 +4,7 @@
 #include <assert.h>
 #include <cmath>
 
-CNormalDistribution::CNormalDistribution(vector<double> possibleOutcomes, double mean, double stdDev)
+CNormalDistribution::CNormalDistribution(vector<double>& possibleOutcomes, double mean, double stdDev)
 {
 	m_possibleOutcomes = possibleOutcomes;
 	m_mean = mean;
@@ -58,7 +58,7 @@ void CNormalDistribution::GenerateDistribution(double SampleSize)
 	}
 }
 
-CGammaDistribution::CGammaDistribution(vector<double> possibleOutcomes, double mean, double stdDev)
+CGammaDistribution::CGammaDistribution(vector<double>& possibleOutcomes, double mean, double stdDev)
 {
 	m_possibleOutcomes = possibleOutcomes;
 	m_mean = mean;

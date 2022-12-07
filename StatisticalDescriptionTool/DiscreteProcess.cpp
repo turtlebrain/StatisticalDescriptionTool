@@ -2,7 +2,7 @@
 #include <assert.h>
 #include <math.h>
 
-CDiscreteRandomVariable::CDiscreteRandomVariable(vector<int> RandomSample)
+CDiscreteRandomVariable::CDiscreteRandomVariable(vector<int> &RandomSample)
 {
 	m_RandomSample = RandomSample;
 	InitializeRandomVariable();
@@ -143,7 +143,7 @@ inline void CDiscreteRandomVariable::CalculateStandardDeviation()
 	m_StdDeviation = stdDev;
 }
 
-void CDiscreteRandomVariable::AppendRandomSample(vector<int> RandomSampleToAppend)
+void CDiscreteRandomVariable::AppendRandomSample(vector<int> &RandomSampleToAppend)
 {
 	m_RandomSample.insert(m_RandomSample.end(), RandomSampleToAppend.begin(), RandomSampleToAppend.end());
 	InitializeRandomVariable();

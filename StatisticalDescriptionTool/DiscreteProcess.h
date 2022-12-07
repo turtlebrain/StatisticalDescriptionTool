@@ -19,7 +19,7 @@ class CDiscreteRandomVariable
 {
 public:
 	CDiscreteRandomVariable();	
-	CDiscreteRandomVariable(vector<int> RandomSample);
+	CDiscreteRandomVariable(vector<int>& RandomSample);
 	~CDiscreteRandomVariable();
 
 public:
@@ -45,7 +45,7 @@ public:
 	int GetSampleSize() { return m_SampleSize; }
 
 	// Utility functions
-	void AppendRandomSample(vector<int> RandomSampleToAppend);
+	void AppendRandomSample(vector<int> &RandomSampleToAppend);
 
 protected:
 	vector<int> m_RandomSample;

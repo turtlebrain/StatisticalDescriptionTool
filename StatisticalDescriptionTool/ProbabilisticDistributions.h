@@ -25,7 +25,7 @@ protected:
 class CNormalDistribution : public CContinuousDistribution
 {
 public:
-	CNormalDistribution(vector<double> possibleOutcomes, double mean, double stdDev);
+	CNormalDistribution(vector<double>& possibleOutcomes, double mean, double stdDev);
 	CNormalDistribution(double mean, double stdDev);
 	~CNormalDistribution();
 
@@ -48,7 +48,7 @@ protected:
 class CGammaDistribution : public CContinuousDistribution
 {
 public:
-	CGammaDistribution(vector<double> possibleOutcomes, double mean, double stdDev);
+	CGammaDistribution(vector<double>& possibleOutcomes, double mean, double stdDev);
 	~CGammaDistribution();
 
 public:

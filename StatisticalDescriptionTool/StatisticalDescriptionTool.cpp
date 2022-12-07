@@ -199,16 +199,20 @@ int main()
 
         // Average Draws
         vector<int> meanDraw(NUMBER_OF_DRAWS);
+        vector<int> modeDraw(NUMBER_OF_DRAWS);
         vector<CDiscreteRandomVariable*> SampleDraws(NUMBER_OF_DRAWS);
 #pragma omp parallel for
         for (int i = 0; i < NUMBER_OF_DRAWS; i++) {
             SampleDraws[i] = new CDiscreteRandomVariable(RandomDraws[i]);
             meanDraw[i] = (int)(ceil(SampleDraws[i]->GetMean()));
+            modeDraw[i] = SampleDraws[i]->GetMode();
             delete SampleDraws[i];
         }
 
         cout << "Mean Draw:" << endl;
         PrintVector(meanDraw);
+        cout << "Mode Draw:" << endl;
+        PrintVector(modeDraw);
 
     }
 
