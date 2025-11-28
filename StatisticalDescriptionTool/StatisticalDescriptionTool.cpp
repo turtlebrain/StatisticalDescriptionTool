@@ -66,15 +66,33 @@ int main()
 
     CFileReader LottoFileReader;
 
-    // 2021
-    string lottoFileName("2021Results-PP.csv");
-    LottoFileReader.ReadTableOfIntegers(lottoFileName);
+    // 2018
+    string l2018FileName("2018Results-PP.csv");
+    LottoFileReader.ReadTableOfIntegers(l2018FileName);
     vector<vector<int>> cumulYearsResults = LottoFileReader.GetIntegersDataSet();
+    // 2019
+    string l2019FileName("2019Results-PP.csv");
+    LottoFileReader.ReadTableOfIntegers(l2019FileName);
+    vector<vector<int>> y2019Results = LottoFileReader.GetIntegersDataSet();
+    // 2018 - 2019
+    cumulYearsResults.insert(cumulYearsResults.end(), y2019Results.begin(), y2019Results.end());
+    // 2020
+    string l2020FileName("2020Results-PP.csv");
+    LottoFileReader.ReadTableOfIntegers(l2020FileName);
+    vector<vector<int>> y2020Results = LottoFileReader.GetIntegersDataSet();
+    // 2018 - 2020
+    cumulYearsResults.insert(cumulYearsResults.end(), y2020Results.begin(), y2020Results.end());
+    // 2021
+    string l2021FileName("2021Results-PP.csv");
+    LottoFileReader.ReadTableOfIntegers(l2021FileName);
+    vector<vector<int>> y2021Results = LottoFileReader.GetIntegersDataSet();
+    // 2018 - 2021
+    cumulYearsResults.insert(cumulYearsResults.end(), y2021Results.begin(), y2021Results.end()); 
     // 2022
     string l2022FileName("2022Results-PP.csv");
     LottoFileReader.ReadTableOfIntegers(l2022FileName);
     vector<vector<int>> y2022Results = LottoFileReader.GetIntegersDataSet();
-    // 2021 - 2022
+    // 2018 - 2022
     cumulYearsResults.insert(cumulYearsResults.end(), y2022Results.begin(), y2022Results.end());
 
     vector<vector<int>> SampleWinningNumbers(NUMBER_OF_DRAWS);
@@ -178,7 +196,7 @@ int main()
     PrintVector(successiveTest);
 
     // Draw Simulation
-    int drw_sample_size(30);
+    int drw_sample_size(15);
     int num_trials(50);
 
     for (int trials = 1; trials <= num_trials; trials++) {
